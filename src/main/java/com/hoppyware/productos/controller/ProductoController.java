@@ -4,15 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import com.hoppyware.productos.service.*;
 import java.util.List;
 import com.hoppyware.productos.model.*;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
-
 
 
 @Controller
@@ -35,6 +30,16 @@ public class ProductoController {
     public ResponseEntity<Producto> guardar(@RequestBody Producto producto){
         Producto nuevoProd = productoService.save(producto);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevoProd);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Producto> buscarId(@PathVariable Long id){
+        try{
+            Producto producto = productoService.findById(id);
+            return ResponseEntity.ok(producto);
+        } catch(Exception e){
+            return ResponseEntity.notFound().build();
+        }
     }
     
 

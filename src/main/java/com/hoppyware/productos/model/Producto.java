@@ -27,4 +27,5 @@ public class Producto {
     private Double precio;
     @Column(nullable = false)
     private Integer stock;
+    
 }
