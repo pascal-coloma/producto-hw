@@ -13,8 +13,7 @@ import lombok.NoArgsConstructor;
 public class Producto {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generador_secuencia_id_ped")
-    @SequenceGenerator(name = "generador_secuencia_id_ped", sequenceName = "secuencia_id_ped", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
     @Column(nullable = false)

@@ -27,9 +27,9 @@ public class ProductoController {
     }
 
     @PostMapping("/guardar")
-    public ResponseEntity<Producto> guardar(@RequestBody Producto producto){
-        Producto nuevoProd = productoService.save(producto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(nuevoProd);
+    public ResponseEntity<List<Producto>> guardar(@RequestBody List<Producto> listaProductos){
+        List<Producto> listaProds = productoService.saveLista(listaProductos);
+        return ResponseEntity.status(HttpStatus.CREATED).body(listaProds);
     }
 
     @GetMapping("/{id}")
