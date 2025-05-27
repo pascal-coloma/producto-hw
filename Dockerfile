@@ -12,17 +12,19 @@ RUN ./mvnw clean package -DskipTests
 
 # Stage 2: Runtime
 FROM openjdk:19-jdk-slim
+
+# Crear directorio de trabajo
 WORKDIR /app
-VOLUME /tmp
 
-# Copy built jar
-COPY --from=build /app/target/productos-0.0.1-SNAPSHOT.jar app.jar
+# Copiar el JAR
+COPY target/productos-0.0.1-SNAPSHOT.jar app.jar
 
-# Add zip and unzip
-COPY wallet.zip /app/wallet.zip
-RUN apt-get update && apt-get install -y unzip && unzip /app/wallet.zip -d /app
+# Copiar el archivo de propiedades y la carpeta wallet
+COPY env.properties .
+COPY wallet/ ./wallet/
 
-# Expose port and start application
-EXPOSE 8081
-ENTRYPOINT ["java","-jar","app.jar"]
+# Exponer el puerto
+EXPOSE 8082
 
+# Ejecutar la aplicación con las propiedades externas
+ENTRYPOINT ["java", "-Dspring.config.import=file:env.properties", "-jar", "app.jar"]
